@@ -1,0 +1,23 @@
+{
+  "name": "prompts-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js",
+    "db:reset": "npx sequelize-cli db:drop && npx sequelize-cli db:create && npx sequelize-cli db:migrate && npx sequelize-cli db:seed:all"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "pg": "^7.12.1",
+    "sequelize": "^5.19.2"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.3",
+    "sequelize-cli": "^5.5.1"
+  }
+}
