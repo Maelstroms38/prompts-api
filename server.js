@@ -1,7 +1,7 @@
 const express = require('express');
 const PORT = process.env.PORT || 3000;
 
-const { Prompts } = require('./models');
+const { Prompts, sequelize } = require('./models');
 
 const app = express();
 
@@ -22,4 +22,11 @@ app.get('/prompts/:id', async (req, res) => {
     const id = parseInt(req.params.id)
     const prompt = await Prompts.findByPk(id)
     res.json(prompt)
+})
+
+app.get('/random', async (req, res) => {
+	const prompt = await Prompts.findOne({ 
+	  order: sequelize.random() 
+	});
+	res.json(prompt)
 })
