@@ -3,8 +3,6 @@ const { ApolloServer, gql } = require('apollo-server-express')
 const { execute, subscribe } = require('graphql')
 const { createServer } = require('http')
 const { makeExecutableSchema } = require('graphql-tools')
-const cors = require('cors');
-const bodyParser = require('body-parser')
 
 const PORT = process.env.PORT || 3000;
 
@@ -46,8 +44,6 @@ const apolloServer = new ApolloServer({
 const app = express();
 const server = createServer(app);
 apolloServer.applyMiddleware({ app })
-app.use(bodyParser.json())
-app.use(cors())
 
 server.listen({ port: PORT }, () => {
     console.log(`Express server listening on port ${PORT}`);
