@@ -1,21 +1,14 @@
-const express = require('express')
-const { ApolloServer, gql } = require('apollo-server-express')
-const { execute, subscribe } = require('graphql')
-const { createServer } = require('http')
-const { makeExecutableSchema } = require('graphql-tools')
-
-const PORT = process.env.PORT || 3000;
-
+const { GraphQLServer } = require('graphql-yoga');
 const { Prompts, sequelize } = require('./models');
 
-const typeDefs = gql`
-  type Prompt { title: String!, id: Int! }
+const typeDefs = `
+  type Prompt { title: String!, id: ID! }
   type Query { prompt: Prompt }
 `;
 
 const resolvers = {
   Query: {
-    prompt: async () => {
+    prompt: async (_, args) => {
       const prompt = await Prompts.findOne({ 
         order: sequelize.random() 
       });
@@ -24,27 +17,9 @@ const resolvers = {
   },
 };
 
-const schema = makeExecutableSchema({
-  typeDefs,
+const server = new GraphQLServer({ 
+  typeDefs, 
   resolvers,
 });
 
-const apolloServer = new ApolloServer({
-  schema, 
-  uploads: false,
-  introspection: true,
-    playground: {
-      endpoint: '/graphql',
-      settings: {
-        "editor.theme": "light"
-      }
-  }
-});
-
-const app = express();
-const server = createServer(app);
-apolloServer.applyMiddleware({ app })
-
-server.listen({ port: PORT }, () => {
-    console.log(`Express server listening on port ${PORT}`);
-});
+server.start(() => console.log(`Server is running at http://localhost:4000`))
