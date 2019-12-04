@@ -1,5 +1,5 @@
 const { GraphQLServer } = require('graphql-yoga');
-const { Prompts, sequelize } = require('./models');
+const { Prompts, sequelize } = require('../models');
 
 const typeDefs = `
   type Prompt { title: String!, id: ID! }
