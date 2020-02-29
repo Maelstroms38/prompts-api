@@ -3,7 +3,7 @@ const faker = require('faker');
 
 const prompts = [...Array(100)].map((prompt) => (
   {
-    title: faker.lorem.sentence(),
+    title: faker.hacker.phrase(),
     createdAt: new Date(),
     updatedAt: new Date()
   }
